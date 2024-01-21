@@ -6,7 +6,10 @@ on:
     branches: [ "main" ]
     paths:
       - DSCScripts/**
-
+      
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    
 jobs:
   zip_it_up:
     runs-on: ubuntu-latest
