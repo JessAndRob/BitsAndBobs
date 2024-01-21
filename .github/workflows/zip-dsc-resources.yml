@@ -23,10 +23,12 @@ jobs:
 
           $tempLocation = (Join-Path $env:GITHUB_WORKSPACE '.\temp\')
 
-          # clean up old zip file
-          if (test-path $zipPath) {
-            Remove-Item $zipPath -Confirm:$false
+          # clean up temp package folder
+          if (test-path $tempLocation) {
+              Remove-Item $tempLocation -Recurse -Confirm:$false -Force
           }
+        
+          New-Item $tempLocation -Type Directory
 
           $zipFiles = Get-ChildItem .\DSCScripts\ *.ps1
 
