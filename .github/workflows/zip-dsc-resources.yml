@@ -38,6 +38,9 @@ jobs:
           foreach ($zf in $zipFiles) {
             Compress-Archive -Path $zf.FullName -DestinationPath (Join-Path $tempLocation $zf.Name)
           }
+
+          # set zipPath to env variable
+          "zipPath=$tempLocation" >> $env:GITHUB_ENV
         
     - name: Release
       uses: softprops/action-gh-release@v1
@@ -48,4 +51,4 @@ jobs:
         release_name: Release ${{ github.ref }}
         body: 'a new release of dsc scripts'
         files: |
-          .\temp\*.zip
+          $($env:zipPath)
