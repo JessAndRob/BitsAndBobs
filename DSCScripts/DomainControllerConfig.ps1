@@ -32,6 +32,7 @@ configuration DomainControllerConfig
         #        $disk = Get-Disk -Number 3
         #        New-Volume -Disk $disk -FileSystem NTFS -DriveLetter S -FriendlyName "SYSVOL"
         #    }
+        
         #    TestScript = {
         #        return ((Get-Volume -DriveLetter N -ErrorAction SilentlyContinue) -ne $null)
         #    }
