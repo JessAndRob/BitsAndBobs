@@ -1,0 +1,46 @@
+name: zip_Dsc_Resources
+
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+    paths:
+      - /DSCScripts/**
+
+jobs:
+  zip_it_up:
+    runs-on: ubuntu-latest
+    steps:
+
+      # Checkout code
+    - uses: actions/checkout@main
+
+    - name: Create a Zip file
+      id: zip
+      shell: pwsh
+      run: |
+          $ErrorActionPreference = "Stop"
+
+          $tempLocation = (Join-Path $env:GITHUB_WORKSPACE '.\temp\')
+
+          # clean up old zip file
+          if (test-path $zipPath) {
+            Remove-Item $zipPath -Confirm:$false
+          }
+
+          $zipFiles = Get-ChildItem .\DSCScripts\ *.ps1
+
+          foreach ($zf in $zipFiles) {
+            Compress-Archive -Path $zf.FullName -DestinationPath (Join-Path $tempLocation $zf.Name)
+          }
+        
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: 'a new release of dsc scripts'
+        files: |
+          .\temp\*.zip
