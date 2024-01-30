@@ -33,8 +33,11 @@ jobs:
         
           $null = New-Item $tempLocation -Type Directory
 
+
+          $zipFiles = Get-ChildItem .\DSCScripts\ *.ps1
+          
           write-output 'we found the following files to zip:'
-          $zipFiles = Get-ChildItem $tempLocation *.ps1 -Recurse
+          $zipFiles
 
           foreach ($zf in $zipFiles) {
             write-host ('zipping file: {0}' -f $zf.FullName)
