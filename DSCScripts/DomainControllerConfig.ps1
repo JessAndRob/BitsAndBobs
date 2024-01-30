@@ -64,6 +64,11 @@ configuration DomainControllerConfig
                 else {
                     Install-ADDSForest -SkipPreChecks -DomainName $using:domain -SafeModeAdministratorPassword $domainCredential.Password -DatabasePath "C:\NTDS" -SysvolPath "C:\SYSVOL" -LogPath "C:\NTDS" -NoRebootOnCompletion:$false -Confirm:$false -Force;
                 }
+
+                # create OU for SQL Servers
+                if(-not (Get-ADOrganizationalUnit -Filter {Name -eq 'SQL'} -ErrorAction SilentlyContinue) {
+                    New-ADOrganizationalUnit -Name 'SQL'
+                }
             }
             TestScript = {
                 return ((Get-Item -Path C:\SYSVOL\sysvol -ErrorAction SilentlyContinue) -ne $null)
