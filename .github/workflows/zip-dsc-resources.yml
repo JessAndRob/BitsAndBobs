@@ -33,9 +33,12 @@ jobs:
         
           $null = New-Item $tempLocation -Type Directory
 
+          write-output 'we found the following files to zip:'
           $zipFiles = Get-ChildItem $tempLocation *.ps1 -Recurse
 
           foreach ($zf in $zipFiles) {
+            write-host ('zipping file: {0}' -f $zf.FullName)
+            write-output ('zipping file: {0}' -f $zf.FullName)
             Compress-Archive -Path $zf.FullName -DestinationPath (Join-Path $tempLocation ('{0}.zip' -f $zf.Name))
           }
 
