@@ -31,7 +31,7 @@ jobs:
               Remove-Item $tempLocation -Recurse -Confirm:$false -Force
           }
         
-          New-Item $tempLocation -Type Directory
+          $null = New-Item $tempLocation -Type Directory
 
           $zipFiles = Get-ChildItem .\DSCScripts\ *.ps1
 
@@ -41,6 +41,8 @@ jobs:
 
           # set zipPath to env variable
           "zipPath=$tempLocation" >> $env:GITHUB_ENV
+
+          GCI $tempLocation
         
     - name: Release
       uses: softprops/action-gh-release@v1
