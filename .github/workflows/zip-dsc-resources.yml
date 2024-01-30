@@ -58,4 +58,4 @@ jobs:
         name: Release ${{ github.ref }}
         body: 'a new release of dsc scripts'
         files: |
-          $($env:zipPath)*.zip
+          /home/runner/work/BitsAndBobs/BitsAndBobs/temp/DomainControllerConfig.zip
