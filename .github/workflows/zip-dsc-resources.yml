@@ -33,10 +33,10 @@ jobs:
         
           $null = New-Item $tempLocation -Type Directory
 
-          $zipFiles = Get-ChildItem .\DSCScripts\ *.ps1
+          $zipFiles = Get-ChildItem $tempLocation *.ps1 -Recurse
 
           foreach ($zf in $zipFiles) {
-            Compress-Archive -Path $zf.FullName -DestinationPath (Join-Path $tempLocation $zf.Name)
+            Compress-Archive -Path $zf.FullName -DestinationPath (Join-Path $tempLocation ('{0}.zip' -f $zf.Name))
           }
 
           # set zipPath to env variable
