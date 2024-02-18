@@ -13,3 +13,5 @@ This folder is used in the SQLBitsInfra bicep deployment.
 This folder has scripts in 😉
 
 - reboot-vms.ps1 - pass this an array of vm name, resource group and subscription - and it'll restart vms for you
+- savejumpykeepystuff.ps1 - used as a run-command so when we destroy the domain in SQLBitsInfra we keep our user folder
+
